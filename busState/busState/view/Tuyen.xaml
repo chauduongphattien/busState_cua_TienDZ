@@ -1,0 +1,67 @@
+﻿<Page x:Class="busState.view.Tuyen"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:busState.view"
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="1000"
+      Background="Transparent"
+      Title="Tuyen">
+
+    <Grid>
+        <StackPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0"  HorizontalAlignment="Left"  >
+                    <Button x:Name="combackbtn" Width="40"  Background="Transparent"
+                            Margin="10,10,0,0" BorderThickness="0">
+                        <fa:IconImage Icon="LongArrowLeft" Foreground="White"/>
+                    </Button>
+                    
+                </StackPanel>
+            </Grid>
+
+            <ScrollViewer Height="450" Margin="0,15,0,0">
+                <ListView x:Name="listviewtuyen">
+                    <ListView.View>
+                        <GridView>
+
+                            <GridView.ColumnHeaderContainerStyle>
+                                <Style TargetType="GridViewColumnHeader">
+                                    <Setter Property="Background" Value="BlueViolet"/>
+                                    <Setter Property="Foreground" Value="AliceBlue"/>
+                                    
+                                </Style>
+                            </GridView.ColumnHeaderContainerStyle>
+                            
+                            <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Matuyen}" Width="40"/>
+                            <GridViewColumn Header="Tuyến" DisplayMemberBinding="{Binding Ten}" Width="100"/>
+                            <GridViewColumn Header="Chuyến đầu" DisplayMemberBinding="{Binding Start}" Width="100"/>
+                            <GridViewColumn Header="Chuyến cuối" DisplayMemberBinding="{Binding End}" Width="100"/>
+                            <GridViewColumn Header="Xuất phát" DisplayMemberBinding="{Binding Bendau}" Width="100"/>
+                            <GridViewColumn Header="Điểm đến" DisplayMemberBinding="{Binding Bencuoi}" Width="100"/>
+                            <GridViewColumn Header="Trạng thái" DisplayMemberBinding="{Binding Trangthai}" Width="100"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </ScrollViewer>
+
+            <Grid Margin="0,10,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Content="Tuyến ngưng HĐ" Width="150" Height="30" Foreground="White" Background="Black"
+                        x:Name="tuyenNgungBtn"
+                        Click="tuyenNgungBtn_Click"/>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</Page>

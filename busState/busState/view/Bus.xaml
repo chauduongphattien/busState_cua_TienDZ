@@ -1,0 +1,99 @@
+﻿<Page x:Class="busState.view.Bus"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:busState.view"
+      xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+      
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Background="Transparent"
+      Title="Bus">
+
+    
+    
+    <Grid>
+        <StackPanel>
+            <Grid Height="40">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                   
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0"  Orientation="Horizontal">
+                    <TextBox Margin="5,0,0,0" Width="50" Height="20"
+                             Background="Transparent" BorderBrush="White"
+                             Foreground="White" />
+                    <Button Margin="5,0,5,0" Background="Transparent"
+                            BorderThickness="0">
+                        <fa:IconImage Icon="Search" Foreground="White" Width="10" Height="20" />
+                    </Button>
+                    <Label Content="Tìm kiếm bằng mã xe" VerticalContentAlignment="Center"
+                           HorizontalContentAlignment="Center" Foreground="White"
+                           FontFamily="Montserrat"/>
+                    <fa:IconImage Icon="Bus" Foreground="Purple" Width="20" Height="20"
+                                  Margin="5,0,0,0"/>
+                </StackPanel>
+
+                
+            </Grid>
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" Height="350"
+                              VerticalScrollBarVisibility="Auto">
+                <ListView x:Name="listviewBus"  SelectionMode="Single" SelectionChanged="listviewBus_SelectionChanged" >
+                    <ListView.View>
+                        <GridView>
+
+                            <GridView.ColumnHeaderContainerStyle>
+                                <Style TargetType="GridViewColumnHeader">
+                                    <Setter Property="Background" Value="Gray"/>
+                                    <Setter Property="Foreground" Value="Wheat"/>
+                                    <Setter Property="FontFamily" Value="Roboto"/>
+                                    <Setter Property="BorderThickness" Value="1,0,1,0"/>
+                                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                </Style>
+                            </GridView.ColumnHeaderContainerStyle>
+                            <GridViewColumn>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                       
+                                            <fa:IconImage Icon="Bus" Foreground="blue" Width="20" Height="20"/>
+                                       
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn Header="Mã Xe" Width="50" DisplayMemberBinding="{Binding Maxxe}"></GridViewColumn>
+                            <GridViewColumn Header="Tuyến" Width="50" DisplayMemberBinding="{Binding Tuyen}"></GridViewColumn>
+                            <GridViewColumn Header="Tài Xế" Width="200" DisplayMemberBinding="{Binding TenTaiXe}"></GridViewColumn>
+                            <GridViewColumn Header="Phụ Xe" Width="200" DisplayMemberBinding="{Binding TenPhuXe}"></GridViewColumn>
+                            <GridViewColumn Header="Bến Xuấ Phát" Width="50" DisplayMemberBinding="{Binding Xuatphat}"></GridViewColumn>
+                            <GridViewColumn Header="Trạng Thái" Width="80" DisplayMemberBinding="{Binding Trangthai}"></GridViewColumn>
+
+                        </GridView>
+                    </ListView.View>
+                    
+                </ListView>
+            </ScrollViewer>
+            <Grid Margin="0,10,0,0" VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+
+                <Button Grid.Column="0" Width="150" Height="30" x:Name="conHDBtn"
+                        Content="Xe không còn HĐ" Background="Black" Foreground="White"
+                        VerticalContentAlignment="Center"
+                        Click="conHDBtn_Click"/>
+                <Button Grid.Column="1" Width="150" Height="30" x:Name="seeallBtn"
+                        Content="Xem Tât Cả" Background="Black" Foreground="White"
+                        VerticalContentAlignment="Center"
+                        Click="seeallBtn_Click"/>
+
+
+            </Grid>
+        </StackPanel>
+    </Grid>
+</Page>
