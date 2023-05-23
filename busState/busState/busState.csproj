@@ -75,6 +75,9 @@
     <Compile Include="view\calculationBus.xaml.cs">
       <DependentUpon>calculationBus.xaml</DependentUpon>
     </Compile>
+    <Compile Include="view\changepassFrom.xaml.cs">
+      <DependentUpon>changepassFrom.xaml</DependentUpon>
+    </Compile>
     <Compile Include="view\Home.xaml.cs">
       <DependentUpon>Home.xaml</DependentUpon>
     </Compile>
@@ -126,6 +129,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="view\calculationBus.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\changepassFrom.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

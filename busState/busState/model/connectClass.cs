@@ -20,7 +20,7 @@ namespace busState.model
         }
         //Data Source=DESKTOP-9B1OK98;Initial Catalog=BusStation;Integrated Security=True
         //  public static string connectStr = @"Data Source=DESKTOP-9B1OK98;Initial Catalog=busData;User ID=tienDZ;Password=12345";
-        public static string connectStr = @"Data Source=192.168.0.27;Initial Catalog=busStation;";/*User ID=tienDZ;Password=12345;*/
+        public static string connectStr = @"Data Source=192.168.0.36;Initial Catalog=busStation;";/*User ID=tienDZ;Password=12345;*/
         string acountCon;
         string accountConUser;
         string accountConPass;

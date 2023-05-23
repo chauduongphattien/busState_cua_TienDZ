@@ -142,11 +142,11 @@
                       
                     </Grid>
 
-                    <Button x:Name="upBtn" Background="GreenYellow" Height="30" Foreground="White" Margin="10">
-                        <fa:IconImage Icon="Gear" Width="20" Height="20" />
+                    <Button Click="upBtn_Click" x:Name="upBtn" Background="GreenYellow" Height="30" Foreground="White" Margin="10">
+                        <fa:IconImage Icon="Gear" Width="20" Height="20"/>
                         
                     </Button>
-                    <Button x:Name="delBtn" Background="Gray" Height="30"  Margin="10">
+                    <Button x:Name="delBtn" Click="delBtn_Click" Background="Gray" Height="30"  Margin="10">
                         <fa:IconImage Icon="Trash" Width="20" Height="20" Foreground="Crimson"/>
 
                     </Button>

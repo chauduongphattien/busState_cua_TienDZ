@@ -2,6 +2,7 @@
 using busState.model;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -82,9 +83,9 @@ namespace busState.view
                     int dt = (int)cmd1.ExecuteScalar();
                     doanhthuLB.Content = dt.ToString();
                 }
-                catch (Exception ex)
+                catch
                 {
-                    System.Windows.MessageBox.Show(ex.Message);
+                    
                 }
 
 
@@ -95,6 +96,67 @@ namespace busState.view
             }
 
            
+        }
+
+        private void upBtn_Click(object sender, RoutedEventArgs e)
+        {
+            connectClass conClass = new connectClass("tienDZ", "12345");
+            SqlConnection con = conClass.getConnect();
+            using (con)
+            {
+                try
+                {
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand();
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandText = "CreateDataBus";
+                    cmd.Parameters.AddWithValue("@MaXe",box0.Text);
+                    cmd.Parameters.AddWithValue("@Tuyen", box1.Text);
+                    cmd.Parameters.AddWithValue("@TaiXe",SqlDbType.Int).Value=Convert.ToInt32(box2.Text);
+                    cmd.Parameters.AddWithValue("@PhuXe", SqlDbType.Int).Value = Convert.ToInt32(box3.Text);
+                    cmd.Parameters.AddWithValue("@TrangThai", SqlDbType.Int).Value = Convert.ToInt32(box5.Text);
+                    cmd.Connection = con;
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                    System.Windows.MessageBox.Show("Đã thêm");
+                }
+                catch
+                {
+                    System.Windows.MessageBox.Show("Thêm Thất Bại");
+                }
+            }
+        }
+
+        private void delBtn_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = System.Windows.MessageBox.Show("Bạn có muốn xóa không?", "Xác nhận", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if(result == MessageBoxResult.Yes)
+            {
+                connectClass conClass = new connectClass("tienDZ", "12345");
+                SqlConnection con = conClass.getConnect();
+                using (con)
+                {
+                    try
+                    {
+                        con.Open();
+                        SqlCommand cmd = new SqlCommand();
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.CommandText = "DeleteDataBus";
+                        cmd.Parameters.AddWithValue("@MaXe", bus.Maxxe.ToString());
+
+                        cmd.Connection = con;
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+                        System.Windows.MessageBox.Show("Đã xóa");
+                    }
+                    catch
+                    {
+                        System.Windows.MessageBox.Show("Xóa Thất Bại");
+                    }
+                }
+            }
+
+            
         }
     }
 }

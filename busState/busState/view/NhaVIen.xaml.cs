@@ -3,6 +3,7 @@ using busState.model;
 using busState.viewModel;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -62,16 +63,7 @@ namespace busState.view
 
         private void themNv_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                viewInfor vi = new viewInfor();
-               
-
-            }
-            catch {
-                System.Windows.MessageBox.Show("da xay a loi gi do");  
-            
-            }
+           
            
         }
         private void listview_selectionChanged(object sender, SelectionChangedEventArgs e)
@@ -127,12 +119,23 @@ namespace busState.view
                                 n.Ngaysinh = reader.GetDateTime(5);
                                 n.CViec = reader.GetString(0);
                                 n.Sex = reader.GetInt32(8);
+                                n.Id = reader.GetInt32(7);
                                 // IDtxt.Text = n.Id.ToString();
+                                IDtxt.Text = n.Id.ToString();
                                 Nametxt.Text = n.Name;
                                 if (n.CViec == "Q")
                                 {
                                     n.CViec = "Quản lý";
                                     chucvuTXT.Text = n.CViec;
+                                }else if (n.CViec == "TX")
+                                {
+                                    n.CViec = "Tài Xế";
+                                    chucvuTXT.Text = n.CViec;
+                                }
+                                else
+                                {
+                                    n.CViec = "Phụ Xe";
+                                    chucvuTXT .Text = n.CViec;
                                 }
                                 dtTxt.Text = n.Sdt;
                                 diachiTXT.Text = n.Diachi;
@@ -167,13 +170,54 @@ namespace busState.view
                 }
             }
 
-            
+            else if (statuslog == 0)
+            {
+                System.Windows.MessageBox.Show("bạn không có quyền xem thông tin này");
+            }
             
         }
 
         private void xoa_Click(object sender, RoutedEventArgs e)
         {
+            if (statuslog == 1)
+            {
+                MessageBoxResult result = System.Windows.MessageBox.Show("Bạn có muốn xóa không?", "Xác nhận", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
+                if (result == MessageBoxResult.Yes)
+                {
+                    var row = this.List_View.SelectedItem as NhanVien;
+                    var id = row.Id;
+                    connectClass conClass = new connectClass("tienDZ", "12345");
+                    SqlConnection con = conClass.getConnect();
+
+
+                    try
+                    {
+                        using (con)
+                        {
+                            con.Open();
+                            SqlCommand cmd = new SqlCommand();
+                            cmd.CommandType = CommandType.StoredProcedure;
+                            cmd.CommandText = "DeleteDataNhanVien";
+                            cmd.Parameters.AddWithValue("@MaNhanVien", id.ToString());
+                            cmd.Connection = con;
+                            cmd.ExecuteNonQuery();
+                            con.Close();
+                            System.Windows.MessageBox.Show("đã xóa");
+                        }
+                    }
+                    catch
+                    {
+                        System.Windows.MessageBox.Show("Xóa thất bại");
+                    }
+                }
+                
+                
+            }
+            else
+            {
+                System.Windows.MessageBox.Show("bạn không có quyền này" );
+            }
         }
 
         private void sua_Click(object sender, RoutedEventArgs e)
@@ -183,39 +227,63 @@ namespace busState.view
 
         private void them_Click(object sender, RoutedEventArgs e)
         {
-            string qr = "insert into NhanVien values(@name,@sdt,@cv,@gt,@diachi,@ngaysinh,@tuoi,@luong)";
-            string grantQuery = $"GRANT BULK ADMIN TO @username";
-            connectClass conclass = new connectClass(Phone,Pass);
-            SqlConnection con = conclass.getConnect();
-            using (con)
+            if (statuslog == 1 && dtTxt.Text!="")
             {
-                SqlCommand cmd = new SqlCommand(qr, con);
-                cmd.Parameters.AddWithValue("@name", Nametxt.Text);
-                cmd.Parameters.AddWithValue("@sdt", dtTxt.Text);
-                cmd.Parameters.AddWithValue("@cv", chucvuTXT.Text);
-                if (namOP.IsChecked == true) { cmd.Parameters.AddWithValue("@gt", 1); }
-                else cmd.Parameters.AddWithValue("@gt", 0);
-                cmd.Parameters.AddWithValue("@diachi", diachiTXT.Text);
-                cmd.Parameters.AddWithValue("@ngaysinh", datepicker.Text);
-                cmd.Parameters.AddWithValue("@tuoi", ageTXT.Text);
-                cmd.Parameters.AddWithValue("@luong", luongTXT);
-                con.Open();
                 try
                 {
-                    cmd.ExecuteNonQuery();
-                    System.Windows.MessageBox.Show("thêm thành công!");
-                }
-                catch
-                {
-                    System.Windows.MessageBox.Show("ban không có quyền thay đổi !");
-                }
-                finally
-                {
-                    con.Close() ;
-                }
+                    connectClass conClass = new connectClass("tienDZ", "12345");
+                    SqlConnection con = conClass.getConnect();
+
+                    using (con)
+                    {
+
+                        try
+                        {
+                            con.Open();
+                            SqlCommand cmd = new SqlCommand();
+                            cmd.Connection = con;
+                            cmd.CommandText = "InsertDataNhanVien";
+                            cmd.CommandType = CommandType.StoredProcedure;
+                            cmd.Parameters.AddWithValue("@CongViec", chucvuTXT.Text);
+                            cmd.Parameters.AddWithValue("@Ten", Nametxt.Text);
+                            cmd.Parameters.AddWithValue("@SoDienThoai", dtTxt.Text);
+                            cmd.Parameters.AddWithValue("@QueQuan", diachiTXT.Text);
+                            cmd.Parameters.AddWithValue("@MaXe", maxetxt.Text);
+                            DateTime? selectedDate = datepicker.SelectedDate;
+
+                            cmd.Parameters.AddWithValue("@NgaySinh", SqlDbType.Date).Value=selectedDate;
+                            cmd.Parameters.AddWithValue("@TrangThai", 1);
+
+                            if (namOP.IsChecked == true)
+                            {
+                                cmd.Parameters.AddWithValue("@sex", 1);
+                            }
+                            else cmd.Parameters.AddWithValue("@sex", 0);
+
+                            cmd.ExecuteNonQuery();
+                            System.Windows.MessageBox.Show("thêm thành công");
+                            con.Close();
+
+                        }
+                        catch (Exception ee)
+                        {
+                            System.Windows.MessageBox.Show("them thất bại" + ee);
+                        }
 
 
-               
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    System.Windows.MessageBox.Show("them thất bại" + ex);
+                }
+
+            }
+
+            else
+            {
+                System.Windows.MessageBox.Show("không có quyên này");
             }
         }
 
@@ -335,6 +403,7 @@ namespace busState.view
                             nv.Sdt = reader.GetString(2);
                             nv.Diachi = reader.GetString(3);
                             nv.Ngaysinh = reader.GetDateTime(5);
+                            nv.Id=reader.GetInt32(7);
                             /* nv.Maxe = reader.GetString(4);
 
                              nv.Trangthai = reader.GetInt32(6);

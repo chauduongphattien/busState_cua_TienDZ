@@ -75,34 +75,43 @@ namespace busState.viewModel
 
             if (Statuslog == 0)
             {
-                connectClass conClass = new connectClass("nhanvien","12345");
-                byte[] imageData = new byte[1000000];
-                SqlConnection con = conClass.getConnect();
-                using (con)
+                try
                 {
+                    connectClass conClass = new connectClass("nhanvien", "12345");
+                    byte[] imageData = new byte[1000000];
+                    SqlConnection con = conClass.getConnect();
+                    using (con)
+                    {
 
-                    con.Open();
-                    string qr = "select avatar from Tai_Khoan where phone=@phone";
-                    SqlCommand cmd = new SqlCommand(qr, con);
-                    cmd.Parameters.AddWithValue("@phone", Phone);
+                        con.Open();
+                        string qr = "select avatar from Tai_Khoan where phone=@phone";
+                        SqlCommand cmd = new SqlCommand(qr, con);
+                        cmd.Parameters.AddWithValue("@phone", Phone);
 
-                    imageData = (byte[])cmd.ExecuteScalar();
-                    con.Close();
+                        imageData = (byte[])cmd.ExecuteScalar();
+                        con.Close();
 
 
+                    }
+
+
+
+                    BitmapImage bitmapImage = new BitmapImage();
+                    using (MemoryStream ms = new MemoryStream(imageData))
+                    {
+                        ms.Position = 0;
+                        bitmapImage.BeginInit();
+                        bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                        bitmapImage.StreamSource = ms;
+                        bitmapImage.EndInit();
+                    }
+                    return bitmapImage;
                 }
-
-
-                BitmapImage bitmapImage = new BitmapImage();
-                using (MemoryStream ms = new MemoryStream(imageData))
+                catch
                 {
-                    ms.Position = 0;
-                    bitmapImage.BeginInit();
-                    bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-                    bitmapImage.StreamSource = ms;
-                    bitmapImage.EndInit();
+                    return null;
                 }
-                return bitmapImage;
+                
             }
 
             else if (Statuslog == 1)

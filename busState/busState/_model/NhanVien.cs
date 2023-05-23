@@ -23,6 +23,7 @@ namespace busState._model
         private string maxe;
         private string iconGT;
         private string clIconGT;
+        
         public NhanVien() { }
 
         public int Id { get => id; set => id = value; }

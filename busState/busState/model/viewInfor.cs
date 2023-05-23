@@ -64,6 +64,7 @@ namespace busState.model
                             nv.Sdt = reader.GetString(2);
                            nv.Diachi = reader.GetString(3);
                             nv.Ngaysinh = reader.GetDateTime(5);
+                            nv.Id=reader.GetInt32(7);
                             /* nv.Maxe = reader.GetString(4);
 
                              nv.Trangthai = reader.GetInt32(6);
@@ -135,6 +136,7 @@ namespace busState.model
                             nv.Sdt = reader.GetString(2);
                             nv.Diachi = reader.GetString(3);
                             nv.Ngaysinh = reader.GetDateTime(5);
+                            nv.Id=reader.GetInt32(7);
                             /* nv.Maxe = reader.GetString(4);
 
                              nv.Trangthai = reader.GetInt32(6);

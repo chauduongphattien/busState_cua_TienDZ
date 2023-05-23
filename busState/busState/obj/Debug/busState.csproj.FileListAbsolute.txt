@@ -36,3 +36,5 @@ N:\socketjava\busState\busState\obj\Debug\view\taixe.baml
 N:\socketjava\busState\busState\obj\Debug\view\Tuyen.baml
 N:\socketjava\busState\busState\obj\Debug\view\calculationBus.g.cs
 N:\socketjava\busState\busState\obj\Debug\view\calculationBus.baml
+N:\socketjava\busState\busState\obj\Debug\view\changepassFrom.g.cs
+N:\socketjava\busState\busState\obj\Debug\view\changepassFrom.baml

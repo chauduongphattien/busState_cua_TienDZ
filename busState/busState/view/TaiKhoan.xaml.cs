@@ -45,11 +45,18 @@ namespace busState.view
                 BitmapImage image_ = htk.onLoadImage();
                 avatarBoder.Background = new ImageBrush(image_);
             }
-            catch(Exception e)
+            catch
             {
-                MessageBox.Show(e.ToString());
+                avatarBoder.Background=null;
             }
-           
+            if (statuslog == 1)
+            {
+                quyenTXT.Text = "Quản Lý";
+            }
+            else
+            {
+                quyenTXT.Text = "Nhân Viên";
+            }
             
         }
 
@@ -83,6 +90,12 @@ namespace busState.view
 
 
 
+        }
+
+        private void passChangeBtn_Click(object sender, RoutedEventArgs e) // do mk
+        {
+            changepassFrom CF=new changepassFrom(Phone,Mk,Statuslog);
+            CF.Show();
         }
     }
 }

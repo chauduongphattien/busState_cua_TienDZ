@@ -70,7 +70,7 @@
                         <Label Grid.Row="4" Content="Giới Tính: "/>
                         <Label Grid.Row="5" Content="Địa Chỉ: "/>
                         <Label Grid.Row="6" Content="Ngày Sinh: "/>
-                        <Label Grid.Row="7" Content="Tuổi: "/>
+                        <Label Grid.Row="7" Content="Mã Xe: "/>
                         <Label Grid.Row="8" Content="Lương: "/>
                     </Grid>
 
@@ -128,7 +128,7 @@
                             <DatePicker x:Name="datepicker" Width="200" Height="25" BorderThickness="0" Background="Transparent"/>
                         </Grid>
                         <Grid Grid.Row="7">
-                            <TextBox x:Name="ageTXT" Width="100" Height="20"/>
+                            <TextBox x:Name="maxetxt" Width="100" Height="20"/>
                         </Grid>
                         <Grid Grid.Row="8">
                             <Grid.ColumnDefinitions>

@@ -133,5 +133,75 @@ namespace busState.view
                 
             }
         }
+
+        
+
+        private void themBtn_Click(object sender, RoutedEventArgs e)
+        {
+            busObj b = new busObj();
+            calculationBus cb = new calculationBus(b);
+            cb.Show();
+
+        }
+
+        private void timkiem_Click(object sender, RoutedEventArgs e)
+        {
+            connectClass conClass;
+
+            if (Stt == 1) {
+                conClass = new connectClass("tienDZ", "12345");
+            }
+            else 
+            {
+                conClass = new connectClass("nhanvien","12345");
+            }
+
+            SqlConnection con = conClass.getConnect();
+
+            using (con)
+            {
+                try
+                {
+                    con.Open();
+                    string q = "select * from fn_KiemXeBus(@mx)";
+                    SqlCommand cmd=new SqlCommand(q,con);
+                    cmd.Parameters.AddWithValue("@mx", maxeTXT.Text);
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    List<busObj> listBus=new List<busObj>();    
+                    while(reader.Read()) {
+                        busObj bus = new busObj();
+                        bus.Maxxe = reader.GetString(0);
+                        bus.Tuyen = reader.GetString(1);
+                        bus.Taixe = reader.GetInt32(3);
+                        bus.Phuxe = reader.GetInt32(2);
+                        bus.Trangthai = reader.GetString(5);
+
+                        string getNameTaiXe = "select Ten from NhanVien where MaNhanVien=" + bus.Taixe.ToString();
+                        SqlConnection conTX = conClass.getConnect();
+                        conTX.Open();
+                        string getNamePhuXe = "select Ten from NhanVien where MaNhanVien=" + bus.Phuxe.ToString();
+                        SqlConnection conPX = conClass.getConnect();
+                        conPX.Open();
+                        SqlCommand cmdTaiXe = new SqlCommand(getNameTaiXe, conTX);
+                        SqlCommand cmdPhuXe = new SqlCommand(getNamePhuXe, conPX);
+
+                        bus.TenTaiXe = cmdTaiXe.ExecuteScalar().ToString();
+                        bus.TenPhuXe = cmdPhuXe.ExecuteScalar().ToString();
+                        conTX.Close();
+                        conPX.Close();
+                        listBus.Add(bus);
+                    }
+                    listviewBus.ItemsSource = listBus;
+                    con.Close();
+
+                }
+                catch
+                {
+
+                }
+
+
+            }
+        }
     }
 }
